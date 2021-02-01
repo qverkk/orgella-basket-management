@@ -8,11 +8,11 @@ interface BasketService {
 
     fun findBasketForUserId(userId: UUID): Optional<BasketEntity>
 
-    fun addItemToBasketForUserId(userId: UUID, basketItem: BasketItem): Boolean
+    fun addItemToBasketForUserId(userId: UUID, basketItem: BasketItem)
 
     fun removeBasketItemForUserId(userId: UUID, basketItem: BasketItem)
 
-    fun createBasketWithItemForUserId(userId: UUID, basketItem: BasketItem): Boolean
+    fun createBasketWithItemForUserId(userId: UUID, basketItem: BasketItem)
 
-    fun createBasketWithItemsForUserId(userId: UUID, basketItems: List<BasketItem>): BasketEntity
+    fun createBasketWithItemsForUserId(userId: UUID, basketItems: MutableList<BasketItem>): BasketEntity
 }

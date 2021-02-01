@@ -6,5 +6,5 @@ import java.util.*
 
 interface SpringDataMongoBasketRepository : MongoRepository<BasketEntity, UUID> {
 
-    fun findByUserId(userId: UUID): Optional<BasketEntity>
+    fun findByUserId(userId: String): Optional<BasketEntity>
 }

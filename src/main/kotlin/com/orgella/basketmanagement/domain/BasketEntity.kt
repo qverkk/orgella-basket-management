@@ -7,5 +7,5 @@ data class BasketEntity(
     @field:Id
     val id: UUID,
     val userId: String,
-    val productIds: List<String>
+    val productPaths: MutableList<BasketItem>
 )

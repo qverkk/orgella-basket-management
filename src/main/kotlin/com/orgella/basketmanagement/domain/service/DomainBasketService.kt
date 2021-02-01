@@ -7,25 +7,63 @@ import java.util.*
 
 class DomainBasketService(
     private val basketRepository: BasketRepository
-): BasketService {
+) : BasketService {
     override fun findBasketForUserId(userId: UUID): Optional<BasketEntity> {
-        TODO("Not yet implemented")
+        return basketRepository.findBasketForUserId(userId)
     }
 
-    override fun addItemToBasketForUserId(userId: UUID, basketItem: BasketItem): Boolean {
-        TODO("Not yet implemented")
+    override fun addItemToBasketForUserId(userId: UUID, basketItem: BasketItem) {
+        val basketEntity = basketRepository.findBasketForUserId(userId).orElse(
+            BasketEntity(
+                UUID.randomUUID(),
+                userId.toString(),
+                mutableListOf()
+            )
+        )
+
+        val existingItem = basketEntity.productPaths.firstOrNull { it.auctionPath == basketItem.auctionPath }
+        if (existingItem != null) {
+            existingItem.quantity = basketItem.quantity
+        } else {
+            basketEntity.productPaths.add(basketItem)
+        }
+        basketRepository.save(basketEntity)
     }
 
     override fun removeBasketItemForUserId(userId: UUID, basketItem: BasketItem) {
-        TODO("Not yet implemented")
+        val basketEntity = basketRepository.findBasketForUserId(userId).orElse(
+            BasketEntity(
+                UUID.randomUUID(),
+                userId.toString(),
+                mutableListOf()
+            )
+        )
+
+        val foundBasketItem = basketEntity.productPaths.first { it.auctionPath == basketItem.auctionPath }
+        basketEntity.productPaths.remove(foundBasketItem)
+        basketRepository.save(basketEntity)
+
     }
 
-    override fun createBasketWithItemForUserId(userId: UUID, basketItem: BasketItem): Boolean {
-        TODO("Not yet implemented")
+    override fun createBasketWithItemForUserId(userId: UUID, basketItem: BasketItem) {
+        val basketEntity = BasketEntity(
+            UUID.randomUUID(),
+            userId.toString(),
+            mutableListOf(basketItem)
+        )
+
+        basketRepository.save(basketEntity)
     }
 
-    override fun createBasketWithItemsForUserId(userId: UUID, basketItems: List<BasketItem>): Boolean {
-        TODO("Not yet implemented")
+    override fun createBasketWithItemsForUserId(userId: UUID, basketItems: MutableList<BasketItem>): BasketEntity {
+        val basketEntity = BasketEntity(
+            UUID.randomUUID(),
+            userId.toString(),
+            basketItems
+        )
+
+        basketRepository.save(basketEntity)
+        return basketEntity
     }
 
 }

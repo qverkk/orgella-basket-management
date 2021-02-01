@@ -6,4 +6,6 @@ import java.util.*
 interface BasketRepository {
 
     fun findBasketForUserId(userId: UUID): Optional<BasketEntity>
+
+    fun save(basketEntity: BasketEntity)
 }
