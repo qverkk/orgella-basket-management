@@ -10,7 +10,7 @@ interface BasketService {
 
     fun addItemToBasketForUserId(userId: UUID, basketItem: BasketItem)
 
-    fun removeBasketItemForUserId(userId: UUID, basketItem: BasketItem)
+    fun removeBasketItemForUserId(userId: UUID, basketItemPath: String)
 
     fun createBasketWithItemForUserId(userId: UUID, basketItem: BasketItem)
 

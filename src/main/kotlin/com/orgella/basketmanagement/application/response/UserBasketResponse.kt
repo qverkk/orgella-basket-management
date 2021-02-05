@@ -4,5 +4,10 @@ import java.util.*
 
 data class UserBasketResponse(
     val userId: UUID,
-    val products: List<ProductResponse>
+    val products: List<UserBasketItemResponse>
+)
+
+data class UserBasketItemResponse(
+    val amount: Int,
+    val product: ProductResponse
 )

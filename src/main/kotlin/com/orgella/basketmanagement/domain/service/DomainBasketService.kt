@@ -17,7 +17,8 @@ class DomainBasketService(
             BasketEntity(
                 UUID.randomUUID(),
                 userId.toString(),
-                mutableListOf()
+                mutableListOf(),
+                0
             )
         )
 
@@ -30,16 +31,17 @@ class DomainBasketService(
         basketRepository.save(basketEntity)
     }
 
-    override fun removeBasketItemForUserId(userId: UUID, basketItem: BasketItem) {
+    override fun removeBasketItemForUserId(userId: UUID, basketItemPath: String) {
         val basketEntity = basketRepository.findBasketForUserId(userId).orElse(
             BasketEntity(
                 UUID.randomUUID(),
                 userId.toString(),
-                mutableListOf()
+                mutableListOf(),
+                0
             )
         )
 
-        val foundBasketItem = basketEntity.productPaths.first { it.auctionPath == basketItem.auctionPath }
+        val foundBasketItem = basketEntity.productPaths.first { it.auctionPath == basketItemPath }
         basketEntity.productPaths.remove(foundBasketItem)
         basketRepository.save(basketEntity)
 
@@ -49,7 +51,8 @@ class DomainBasketService(
         val basketEntity = BasketEntity(
             UUID.randomUUID(),
             userId.toString(),
-            mutableListOf(basketItem)
+            mutableListOf(basketItem),
+            0
         )
 
         basketRepository.save(basketEntity)
@@ -59,7 +62,8 @@ class DomainBasketService(
         val basketEntity = BasketEntity(
             UUID.randomUUID(),
             userId.toString(),
-            basketItems
+            basketItems,
+            0
         )
 
         basketRepository.save(basketEntity)
